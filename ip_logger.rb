@@ -18,16 +18,13 @@ now = Time.now.strftime('%Y-%m-%d %H:%M:%S')
 dyndns_s = Nokogiri::HTML(open('http://checkip.dyndns.org/')).at_css('body').content[ip_regex] rescue nil
 dnsexit_s = Nokogiri::HTML(open('http://ip.dnsexit.com/')).at_css('body').content[ip_regex] rescue nil
 duckduckgo_s = JSON.parse(Nokogiri::HTML(open('https://api.duckduckgo.com/?q=ip&format=json')).at_css('body').content)['Answer'][ip_regex] rescue nil
-startpage_s = Nokogiri::HTML(open('https://startpage.com/do/search?q=ip')).at_css('body').content[/is\s+(#{ip_regex})/i, 1] rescue nil
 dyndns_ip     = IPAddr.new(dyndns_s    ).to_s if dyndns_s
 dnsexit_ip    = IPAddr.new(dnsexit_s   ).to_s if dnsexit_s
 duckduckgo_ip = IPAddr.new(duckduckgo_s).to_s if duckduckgo_s
-startpage_ip  = IPAddr.new(startpage_s ).to_s if startpage_s
 ips = {
   'DynDNS'     => dyndns_ip,
   'DNSExit'    => dnsexit_ip,
-  'DuckDuckGo' => duckduckgo_ip,
-  'StartPage'  => startpage_ip
+  'DuckDuckGo' => duckduckgo_ip
 }
 
 # Exit if no IP found
