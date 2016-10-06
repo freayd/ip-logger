@@ -9,7 +9,7 @@ require 'open-uri'
 sleep 1
 ip_regex = /\d+\.\d+\.\d+\.\d+/
 log = File.join(File.dirname(__FILE__), 'ips.log')
-now = Time.now.strftime('%Y-%m-%d %H:%M:%S')
+now = Time.now
 
 # Retrieve IP:
 # - http://dyn.com/support/developers/checkip-tool/
