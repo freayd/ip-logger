@@ -48,7 +48,7 @@ if File.readable?(log)
     end
 end
 
-# Log unless the message haven't changed
+# Log if the message changed
 message =
   if ips_v4.values.compact.uniq.size > 1 || ips_v6.values.compact.uniq.size > 1
     ips.map { |service, ip| "#{service}:#{ip}" }.join(' ')
