@@ -29,8 +29,8 @@ ips = {
   'WhatIsMyIP'        => whatismyip_ip,
   'WhatIsMyIPAddress' => whatismyipaddress_ip,
 }
-ips_v4 = ips.select { |service, ip| ip.ipv4? }
-ips_v6 = ips.select { |service, ip| ip.ipv6? }
+ips_v4 = ips.select { |service, ip| ip&.ipv4? }
+ips_v6 = ips.select { |service, ip| ip&.ipv6? }
 
 # Exit if no IP found
 exit if ips.values.compact.empty?
@@ -47,9 +47,9 @@ end
 
 # Log unless the message haven't changed
 message =
-  if ips.values.first.nil? || ips_v4.values.uniq.size != 1 || ips_v6.values.uniq.size != 1
-    ips.map { |service, ip| "#{service}:#{ip.to_s}" }.join(' ')
+  if ips_v4.values.compact.uniq.size > 1 || ips_v6.values.compact.uniq.size > 1
+    ips.map { |service, ip| "#{service}:#{ip}" }.join(' ')
   else
-    "#{ips_v4.values.first.to_s} / #{ips_v6.values.first.to_s}"
+    [ ips_v4.values.compact.first, ips_v6.values.compact.first ].compact.join(' / ')
   end
 File.open(log, 'a') {|f| f.puts("[#{now}] - #{message}") } if message != previous_message
