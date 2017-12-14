@@ -15,17 +15,20 @@ now = Time.now
 dyndns_s = open('http://checkip.dyndns.org/').read[ip_regex] rescue nil
 dnsexit_s = open('http://ip.dnsexit.com/').read[ip_regex] rescue nil
 duckduckgo_s = JSON.parse(open('https://api.duckduckgo.com/?q=ip&format=json').read)['Answer'][ip_regex] rescue nil
+ip2location_s = open('https://www.ip2location.com/').read[/(?<=name="ipAddress" value=")#{ip_regex}(?=")/] rescue nil
 whatismyip_s = open('https://www.whatismyip.com/ip-address-lookup/', 'User-Agent' => 'Agent').read[/(?<=name="ip" class="form-control" value=")[^"]+(?=")/] rescue nil
 whatismyipaddress_s = open("https://whatismyipaddress.com/").read[/(?<=<a href="\/\/whatismyipaddress.com\/ip\/)[^"]+(?=">)/] rescue nil
 dyndns_ip            = IPAddr.new(dyndns_s           ) if dyndns_s
 dnsexit_ip           = IPAddr.new(dnsexit_s          ) if dnsexit_s
 duckduckgo_ip        = IPAddr.new(duckduckgo_s       ) if duckduckgo_s
+ip2location_ip       = IPAddr.new(ip2location_s      ) if ip2location_s
 whatismyip_ip        = IPAddr.new(whatismyip_s       ) if whatismyip_s
 whatismyipaddress_ip = IPAddr.new(whatismyipaddress_s) if whatismyipaddress_s
 ips = {
   'DynDNS'            => dyndns_ip,
   'DNSExit'           => dnsexit_ip,
   'DuckDuckGo'        => duckduckgo_ip,
+  'IP2Location'       => ip2location_ip,
   'WhatIsMyIP'        => whatismyip_ip,
   'WhatIsMyIPAddress' => whatismyipaddress_ip,
 }
