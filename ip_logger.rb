@@ -12,12 +12,12 @@ now = Time.now
 # - http://dyn.com/support/developers/checkip-tool/
 # - https://support.google.com/fiber/answer/2899098?hl=en
 # - http://forum.dyndnscommunity.com/forum/viewtopic.php?f=17&t=23
-dyndns_s = open('http://checkip.dyndns.org/').read[ip_regex] rescue nil
-dnsexit_s = open('http://ip.dnsexit.com/').read[ip_regex] rescue nil
-duckduckgo_s = JSON.parse(open('https://api.duckduckgo.com/?q=ip&format=json').read)['Answer'][ip_regex] rescue nil
-ip2location_s = open('https://www.ip2location.com/').read[/(?<=name="ipAddress" value=")#{ip_regex}(?=")/] rescue nil
-whatismyip_s = open('https://www.whatismyip.com/ip-address-lookup/', 'User-Agent' => 'Agent').read[/(?<=name="ip" class="form-control" value=")[^"]+(?=")/] rescue nil
-whatismyipaddress_s = open("https://whatismyipaddress.com/").read[/(?<=<a href="\/\/whatismyipaddress.com\/ip\/)[^"]+(?=">)/] rescue nil
+dyndns_s = URI.open('http://checkip.dyndns.org/').read[ip_regex] rescue nil
+dnsexit_s = URI.open('http://ip.dnsexit.com/').read[ip_regex] rescue nil
+duckduckgo_s = JSON.parse(URI.open('https://api.duckduckgo.com/?q=ip&format=json').read)['Answer'][ip_regex] rescue nil
+ip2location_s = URI.open('https://www.ip2location.com/').read[/(?<=name="ipAddress" value=")#{ip_regex}(?=")/] rescue nil
+whatismyip_s = URI.open('https://www.whatismyip.com/ip-address-lookup/', 'User-Agent' => 'Agent').read[/(?<=name="ip" class="form-control" value=")[^"]+(?=")/] rescue nil
+whatismyipaddress_s = URI.open("https://whatismyipaddress.com/").read[/(?<=<a href="\/\/whatismyipaddress.com\/ip\/)[^"]+(?=">)/] rescue nil
 dyndns_ip            = IPAddr.new(dyndns_s           ) if dyndns_s
 dnsexit_ip           = IPAddr.new(dnsexit_s          ) if dnsexit_s
 duckduckgo_ip        = IPAddr.new(duckduckgo_s       ) if duckduckgo_s
