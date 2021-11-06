@@ -3,7 +3,7 @@
 log = File.join(File.dirname(__FILE__), 'macs.log')
 now = Time.now
 
-mac = `spoof-mac list --wifi`.chomp
+mac = `/usr/local/bin/spoof-mac list --wifi`.chomp
 
 # Exit if no MAC address found
 exit if mac.empty?
